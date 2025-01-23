@@ -13,10 +13,12 @@ class TodoViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
 
     def initialize_request(self, request, *args, **kwargs):
-        self.secret = request.headers.get('X-Telegram-Secret')
-        if self.secret == config('TELEGRAM_SECRET_HEADER_TOKEN'):
+        self.secret = request.headers.get("X-Telegram-Secret")
+        if self.secret == config("TELEGRAM_SECRET_HEADER_TOKEN"):
             return super().initialize_request(request, *args, **kwargs)
-        return Response({"error": "Unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response(
+            {"error": "Unauthorized"}, status=status.HTTP_401_UNAUTHORIZED
+        )
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -39,4 +41,7 @@ class TodoViewSet(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         todo = self.get_object()
         todo.delete()
-        return Response({"message": "Todo deleted successfully"}, status=status.HTTP_200_OK)
+        return Response(
+            {"message": "Todo deleted successfully"},
+            status=status.HTTP_204_NO_CONTENT,
+        )

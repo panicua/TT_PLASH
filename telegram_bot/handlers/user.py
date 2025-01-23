@@ -45,7 +45,6 @@ async def is_admin(message: Message) -> bool:
     return await is_admin_sync(message)
 
 
-
 @sync_to_async
 def get_user_ids_sync() -> list[int]:
     get_users_from_db = TelegramUser.objects.filter(is_user=True)
@@ -76,7 +75,7 @@ def create_keyboard(
 
 
 @user_router.message(Command("add-user"))
-async def command_add_user(message: Message, state: FSMContext):
+async def command_add_user(message: Message, state: FSMContext) -> None:
     if await is_admin(message):
         await state.set_state(AddUser.user_info)
         await message.reply(
@@ -88,7 +87,7 @@ async def command_add_user(message: Message, state: FSMContext):
 
 @user_router.message(Command("delete-user"))
 @user_router.message(Command("edit-user"))
-async def command_handle_users(message: Message, state: FSMContext):
+async def command_handle_users(message: Message, state: FSMContext) -> None:
     if await is_admin(message):
         user_ids = await get_user_ids()
         command = message.text.strip("/")
@@ -114,7 +113,7 @@ async def command_handle_users(message: Message, state: FSMContext):
     lambda c: c.data
     and (c.data.startswith("delete_user:") or c.data.startswith("edit_user:"))
 )
-async def process_user_callback(callback_query: CallbackQuery, state: FSMContext):
+async def process_user_callback(callback_query: CallbackQuery, state: FSMContext) -> None:
     action, user_id = callback_query.data.split(":")
     user_id = int(user_id)
     if action == "delete_user":
@@ -145,7 +144,7 @@ async def process_user_callback(callback_query: CallbackQuery, state: FSMContext
 @user_router.callback_query(lambda c: c.data and c.data.startswith("add_group:"))
 async def process_add_group_callback(
     callback_query: CallbackQuery, state: FSMContext
-):
+) -> None:
     user_id = int(callback_query.data.split(":")[1])
     await state.update_data(user_id=user_id)
     await state.set_state(AddGroup.user_info)
@@ -156,7 +155,7 @@ async def process_add_group_callback(
 @user_router.callback_query(lambda c: c.data and c.data.startswith("delete_group:"))
 async def process_delete_group_callback(
     callback_query: CallbackQuery, state: FSMContext
-):
+) -> None:
     user_id = int(callback_query.data.split(":")[1])
     await delete_user_group(user_id)
     await callback_query.message.edit_text(
@@ -166,7 +165,7 @@ async def process_delete_group_callback(
 
 
 @user_router.message(AddGroup.user_info)
-async def add_group_to_user(message: Message, state: FSMContext):
+async def add_group_to_user(message: Message, state: FSMContext) -> None:
     user_data = await state.get_data()
     user_id = user_data.get("user_id")
     if not user_id:
@@ -184,7 +183,7 @@ async def add_group_to_user(message: Message, state: FSMContext):
 
 
 @user_router.message(AddUser.user_info)
-async def add_user(message: Message, state: FSMContext):
+async def add_user(message: Message, state: FSMContext) -> None:
     user_info = message.text.split(";")
     user_id = user_info[0]
     group = user_info[1] if len(user_info) > 1 else None

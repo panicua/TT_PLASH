@@ -44,4 +44,3 @@ async def command_start(message: Message, state: FSMContext) -> None:
             f"Owner contact: {BOT_OWNER_NAME}\n",
             reply_markup=ReplyKeyboardRemove(),
         )
-

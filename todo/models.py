@@ -8,8 +8,8 @@ class Todo(models.Model):
         return self.description[:20]
 
     class Meta:
-        verbose_name = 'Todo'
-        verbose_name_plural = 'Todos'
+        verbose_name = "Todo"
+        verbose_name_plural = "Todos"
 
 
 class TelegramUser(models.Model):
