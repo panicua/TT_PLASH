@@ -47,4 +47,4 @@ I'll send you main values to change in telegram to save time
 
 
 ## Demo:
-[TT_PLASH_DEMO](DEMO_bot.png)
+![DEMO_bot.png](DEMO_bot.png)
