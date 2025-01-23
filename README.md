@@ -30,6 +30,10 @@ I'll send you main values to change in telegram to save time
    ```
 
 ## Documentation
+### Start commands:
+- /start        -> to get/check an access
+- /help         -> to see commands (only works if you got user/admin access)
+
 ### Users handling commands (admin only):
 - /add-user      -> to add new user and group
 - /delete-user   -> to delete user
