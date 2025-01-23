@@ -41,7 +41,4 @@ class TodoViewSet(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         todo = self.get_object()
         todo.delete()
-        return Response(
-            {"message": "Todo deleted successfully"},
-            status=status.HTTP_204_NO_CONTENT,
-        )
+        return Response(status=status.HTTP_204_NO_CONTENT)

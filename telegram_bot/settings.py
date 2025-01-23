@@ -25,6 +25,4 @@ settings.configure(
 )
 setup()
 
-API_SERVER_URL = ALLOWED_HOSTS[1]
-if API_SERVER_URL == "127.0.0.1":
-    API_SERVER_URL = "http://127.0.0.1:8000"
+API_SERVER_URL = config("HOST_API_URL", default="http://telegram-plash-app:8000/")
