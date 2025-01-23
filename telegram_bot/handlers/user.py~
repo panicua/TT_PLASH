@@ -30,20 +30,8 @@ def is_admin_sync(message: Message) -> bool:
     ).exists()
 
 
-@sync_to_async
-def is_user_sync(message: Message) -> bool:
-    return TelegramUser.objects.filter(
-        telegram_id=message.from_user.id, is_user=True
-    ).exists()
-
-
-async def is_user(message: Message) -> bool:
-    return await is_user_sync(message)
-
-
 async def is_admin(message: Message) -> bool:
     return await is_admin_sync(message)
-
 
 
 @sync_to_async

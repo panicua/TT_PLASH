@@ -1,5 +1,6 @@
 from aiogram import Router
 from aiogram.filters import Command
+from aiogram.types import Message
 from asgiref.sync import sync_to_async
 
 from todo.models import TelegramUser
@@ -8,7 +9,7 @@ help_router = Router()
 
 
 @help_router.message(Command("help"))
-async def command_help(message):
+async def command_help(message: Message):
     get_user_from_db = await sync_to_async(TelegramUser.objects.filter)(
         telegram_id=message.from_user.id
     )
